@@ -84,6 +84,7 @@ object PrinterCam {
     val res = Process(cmd).#>(baos).!
     if res != 0 then {
       println(s"wget exited with error code $res")
+//      val s = new String(baos.toByteArray, "UTF-8")
       return None
     }
     val arr = baos.toByteArray
@@ -107,12 +108,15 @@ object PrinterCam {
       object View extends Component {
         preferredSize = new Dimension(1920/2, 1080/2)
 
-        private val at = AffineTransform.getScaleInstance(0.5, 0.5)
-
         override protected def paintComponent(g: Graphics2D): Unit = {
           super.paintComponent(g)
-          g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON   )
-          g.setRenderingHint(RenderingHints.KEY_RENDERING   , RenderingHints.VALUE_RENDER_QUALITY )
+          g.setRenderingHint(RenderingHints.KEY_ANTIALIASING  , RenderingHints.VALUE_ANTIALIAS_ON           )
+          g.setRenderingHint(RenderingHints.KEY_RENDERING     , RenderingHints.VALUE_RENDER_QUALITY         )
+          g.setRenderingHint(RenderingHints.KEY_INTERPOLATION , RenderingHints.VALUE_INTERPOLATION_BICUBIC  )
+          val sx    = peer.getWidth .toDouble / image.getWidth
+          val sy    = peer.getHeight.toDouble / image.getHeight
+          val scale = Math.min(sx, sy)
+          val at = AffineTransform.getScaleInstance(scale, scale)
           g.drawImage(image, at, null)
 //          g.drawImage(image, 0, 0, null)
         }
