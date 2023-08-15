@@ -2,7 +2,8 @@
 
 # PrinterCam
 
-A work-in-progress for parsing data from Research Catalogue expositions.
+A work-in-progress for grabbing frames from an IP camera and uploading them elsewhere,
+as a mechanism to remotely monitor (for example) a 3D printer.
 
 (C)opyright 2023 by Hanns Holger Rutz. All rights reserved. This project is released under the
 [GNU Affero General Public License](https://github.com/Sciss/PrinterCam/blob/main/LICENSE) v3+ and
